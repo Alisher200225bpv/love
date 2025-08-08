@@ -2,85 +2,146 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Письмо от сердца 💖</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Письмо от сердца 💌</title>
   <style>
     body {
       margin: 0;
+      padding: 30px;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, #fff0f5, #ffe6f0);
+      background: linear-gradient(to bottom, #fff0f5, #ffe4e1);
+      color: #333;
       overflow-x: hidden;
     }
     h1 {
       text-align: center;
-      margin-top: 40px;
       font-size: 2.5em;
       color: #d6336c;
       animation: pulse 2s infinite;
     }
     .letter {
-      max-width: 600px;
-      margin: 20px auto;
-      padding: 20px;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 30px;
       background: white;
       border-radius: 15px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      font-size: 1.2em;
-      line-height: 1.6;
-      color: #333;
-      position: relative;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      animation: unfold 1.5s ease-out;
     }
-    .letter:before {
-      content: '\u2764';
-      position: absolute;
-      top: -10px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 2em;
-      color: #ff69b4;
-      animation: heartbeat 1.5s infinite;
+    @keyframes unfold {
+      0% { transform: scaleY(0); opacity: 0; }
+      100% { transform: scaleY(1); opacity: 1; }
     }
-    @keyframes heartbeat {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.2); }
+    .typewriter {
+      overflow: hidden;
+      border-right: .15em solid #d6336c;
+      white-space: nowrap;
+      animation: typing 4s steps(40, end), blink-caret .75s step-end infinite;
     }
-    .timer {
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #d6336c }
+    }
+    .countdown {
       text-align: center;
+      font-size: 1.2em;
       margin-top: 20px;
-      font-size: 1.5em;
-      color: #d6336c;
+      color: #6c757d;
     }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
+    .reasons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 30px;
+    }
+    .reasons button {
+      padding: 10px 15px;
+      border: none;
+      border-radius: 20px;
+      background-color: #ff99c8;
+      color: white;
+      cursor: pointer;
+      transition: box-shadow 0.3s;
+    }
+    .reasons button:hover {
+      box-shadow: 0 0 10px #ff66a3;
+    }
+    audio {
+      display: block;
+      margin: 30px auto;
+      width: 100%;
+      max-width: 500px;
+    }
+    @media (max-width: 600px) {
+      .letter {
+        padding: 20px;
+        margin: 20px;
+      }
+      h1 {
+        font-size: 2em;
+      }
+    }
+    .petal {
+      position: fixed;
+      top: -50px;
+      width: 20px;
+      height: 20px;
+      background: url('petal.png') no-repeat center;
+      background-size: contain;
+      animation: fall linear infinite;
+      pointer-events: none;
+    }
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Письмо от сердца 💖</h1>
+  <h1>Письмо от сердца 💌</h1>
+
   <div class="letter">
-    <p>Дорогой Chee,</p>
-    <p>Ты — самое прекрасное, что случалось в моей жизни. Каждый день с тобой — это волшебство. Я хочу, чтобы ты знал, как сильно я тебя люблю и ценю. Ты — моё вдохновение, моя радость и моё счастье.</p>
-    <p>С любовью,</p>
-    <p>Твоя половинка 💕</p>
+    <p class="typewriter">Ты — моё вдохновение, моя радость, моя вселенная. Спасибо за твою доброту, поддержку и любовь. Я счастлив, что ты рядом 💖</p>
   </div>
-  <div class="timer" id="timer"></div>
+
+  <div class="countdown" id="countdown"></div>
+
+  <div class="reasons">
+    <button onclick="alert('Ты умеешь слушать и понимать 💬')">Причина 1</button>
+    <button onclick="alert('Ты даришь тепло даже в самые холодные дни ❄️')">Причина 2</button>
+    <button onclick="alert('Ты делаешь меня лучше каждый день 🌱')">Причина 3</button>
+    <button onclick="alert('Ты — моё чудо ✨')">Причина 4</button>
+  </div>
+
+  <audio controls>
+    <source src="song.mp3" type="audio/mpeg">
+    Твой браузер не поддерживает аудио.
+  </audio>
+
   <script>
-    function countdown() {
+    function updateCountdown() {
       const target = new Date("2024-12-28T00:00:00");
       const now = new Date();
       const diff = target - now;
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-      return `${days} дней, ${hours} часов, ${minutes} минут, ${seconds} секунд`;
+      document.getElementById("countdown").textContent =
+        "До 28 декабря 2024 осталось: " + days + " дней 💫";
     }
-    function updateTimer() {
-      document.getElementById("timer").textContent = countdown();
+    updateCountdown();
+
+    // Падающие лепестки
+    for (let i = 0; i < 30; i++) {
+      const petal = document.createElement('div');
+      petal.className = 'petal';
+      petal.style.left = Math.random() * 100 + 'vw';
+      petal.style.animationDuration = (5 + Math.random() * 5) + 's';
+      document.body.appendChild(petal);
     }
-    setInterval(updateTimer, 1000);
   </script>
 </body>
 </html>
