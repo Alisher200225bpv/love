@@ -1,347 +1,165 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Ты моё чудо</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
   <style>
-    :root{
-      --pink:#ff69b4;
-      --rose:#ff3399;
-      --light:#fff0f5;
-      --shadow:rgba(255, 182, 193, 0.6);
-      --bg-grad: linear-gradient(135deg, #ffccdd 0%, #ccffff 100%);
-    }
-
-    /* БАЗА */
-    *{ box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: 'Segoe UI', system-ui, -apple-system, Arial, sans-serif;
-      background: var(--bg-grad);
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff0f5;
       overflow-x: hidden;
-      color: #333;
     }
-    h1 {
+
+    .title {
       text-align: center;
-      margin: 40px 16px 10px;
-      font-size: 44px;
-      color: var(--rose);
-      text-shadow: 0 2px 12px rgba(255,51,153,0.25);
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.04); }
-      100% { transform: scale(1); }
-    }
-    .sub {
-      text-align:center;
-      color:#8a5270;
-      margin-bottom: 8px;
+      font-size: 2.5em;
+      margin-top: 40px;
+      color: #d6336c;
     }
 
-    /* ПАДАЮЩИЕ СЕРДЦА ФОН */
-    .hearts {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-    }
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: url('https://i.imgur.com/Z6jmlFf.png') no-repeat center / contain;
-      animation: fall 8s linear infinite;
-      opacity: .8;
-    }
-    @keyframes fall {
-      0% { top: -40px; transform: translateX(0) rotate(0); opacity: .9; }
-      100% { top: 100vh; transform: translateX(40px) rotate(360deg); opacity: 0; }
-    }
-
-    /* СЛАЙДЕР ФОТО */
-    .slider {
-      margin: 20px auto 0;
-      width: min(92vw, 760px);
-      overflow: hidden;
-      border-radius: 14px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.08);
-      background: rgba(255,255,255,.45);
-      backdrop-filter: blur(6px);
-    }
-    .slides {
+    .photo-gallery {
       display: flex;
-      transition: transform 1s ease;
-    }
-    .slides img {
-      width: 100%;
-      flex-shrink: 0;
-      display: block;
-      object-fit: cover;
-      aspect-ratio: 3/2;
-      filter: saturate(1.05) contrast(1.03);
-      transform: scale(1);
-      transition: transform .6s ease;
-    }
-    .slides img:hover{
-      transform: scale(1.02);
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin: 30px auto;
     }
 
-    /* АУДИО */
-    .audio-wrap{
-      display:flex; justify-content:center; margin: 18px 0 8px;
-    }
-    audio {
-      width: min(92vw, 760px);
+    .photo-gallery img {
+      width: 220px;
       border-radius: 10px;
-      background: #fff;
-      box-shadow: 0 8px 18px rgba(0,0,0,.08);
+      box-shadow: 0 0 10px rgba(200, 0, 100, 0.3);
     }
 
-    /* КНОПКИ */
-    .center { display:flex; justify-content:center; margin: 18px 0; gap: 12px; }
-    .btn-primary, .btn-secondary{
-      border: 0;
-      padding: 12px 18px;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: 600;
-      transition: transform .1s ease, box-shadow .2s ease, background .2s;
-    }
-    .btn-primary{
+    .love-button, .extra-button {
+      display: block;
+      margin: 20px auto;
+      background: #ff69b4;
       color: white;
-      background: linear-gradient(135deg, #ff7ab6, #ff4da0);
-      box-shadow: 0 10px 18px rgba(255, 77, 160, .25);
+      border: none;
+      padding: 12px 20px;
+      font-size: 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background 0.3s;
     }
-    .btn-primary:active{ transform: translateY(1px) scale(0.99); }
-    .btn-secondary{
-      color: #8a5270;
-      background: #ffe7f1;
-      box-shadow: 0 10px 18px rgba(255, 182, 193, .25);
-    }
-    .btn-secondary:active{ transform: translateY(1px) scale(0.99); }
 
-    /* ПОПАП-СООБЩЕНИЕ (из первой версии) */
-    .message {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: var(--light);
-      padding: 14px 20px;
-      border-radius: 20px;
-      box-shadow: 0 0 14px var(--shadow);
-      font-size: 18px;
-      color: var(--pink);
+    .love-button:hover, .extra-button:hover {
+      background: #ff85c1;
+    }
+
+    #reasons, #story, #gratitude {
       display: none;
-      z-index: 30;
-    }
-
-    /* МОДАЛ «ПОЧЕМУ Я ТЕБЯ ЛЮБЛЮ» */
-    .modal.hidden { display: none; }
-    .modal {
-      position: fixed; inset: 0; z-index: 50;
-      display: grid; place-items: center;
-      background: rgba(0,0,0,.25);
-      animation: fadeIn .2s ease;
-    }
-    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
-    .modal-content{
-      width: min(92vw, 620px);
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 20px 50px rgba(0,0,0,.18);
-      padding: 22px 22px 16px;
-      position: relative;
-    }
-    .modal-content h2{
-      margin: 0 0 6px;
-      color: var(--rose);
-      font-size: 26px;
-      text-align:center;
-    }
-    .modal-content p{
+      max-width: 700px;
+      margin: 20px auto;
+      text-align: left;
       font-size: 18px;
-      line-height: 1.5;
-      text-align: center;
-      margin: 8px auto 16px;
-      color: #543646;
-    }
-    .modal-actions{
-      display:flex; justify-content:center; gap: 10px;
-    }
-    .close {
-      position: absolute; right: 10px; top: 10px;
-      border: 0; background: transparent; font-size: 26px;
-      color: #b06; cursor: pointer;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255,182,193,0.5);
     }
 
-    /* ВСПЛЫВАЮЩИЕ СЕРДЦА ПРИ КЛИКЕ НА КНОПКУ */
-    .pop-heart{
-      position: fixed; pointer-events:none; z-index: 60;
-      font-size: 18px; opacity: 0.9;
-      animation: rise 900ms ease forwards;
-      filter: drop-shadow(0 4px 8px rgba(255,77,160,.35));
+    .next-button {
+      text-align: center;
+      display: block;
+      margin: 40px auto;
+      text-decoration: none;
+      background: #d6336c;
+      color: white;
+      padding: 12px 30px;
+      font-size: 18px;
+      border-radius: 30px;
     }
-    @keyframes rise{
-      0%{ transform: translate(-50%, -10px) scale(.9); opacity: 0 }
-      20%{ opacity: 1 }
-      100%{ transform: translate(-50%, -90px) scale(1.25); opacity: 0 }
+
+    /* Лепестки */
+    .petal {
+      position: fixed;
+      top: -50px;
+      width: 30px;
+      height: 30px;
+      background-image: url('https://pngimg.com/uploads/petals/petals_PNG65.png');
+      background-size: cover;
+      pointer-events: none;
+      animation: fall 8s linear infinite;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+      }
     }
   </style>
 </head>
 <body>
+  <h1 class="title">Ты моё чудо 💖</h1>
 
-  <h1>Ты моё счастье. Я тебя люблю</h1>
-  <p class="sub">Сайт для тебя, любимая 💖</p>
+  <audio controls autoplay>
+    <source src="Lady_Gaga_Bruno_Mars_-_Die_With_A_Smile_78229086.mp3" type="audio/mp3">
+    Твой браузер не поддерживает аудио...
+  </audio>
 
-  <!-- Фоновые сердечки -->
-  <div class="hearts" aria-hidden="true">
-    <div class="heart" style="left: 8%;  animation-delay: .0s;"></div>
-    <div class="heart" style="left: 22%; animation-delay: 1.2s;"></div>
-    <div class="heart" style="left: 36%; animation-delay: .6s;"></div>
-    <div class="heart" style="left: 52%; animation-delay: 1.8s;"></div>
-    <div class="heart" style="left: 68%; animation-delay: .9s;"></div>
-    <div class="heart" style="left: 84%; animation-delay: 1.5s;"></div>
+  <div class="photo-gallery">
+    <img src="photo1.jpg" alt="Фото 1">
+    <img src="photo2.jpg" alt="Фото 2">
+    <img src="photo3.jpg" alt="Фото 3">
+    <img src="photo4 (1).jpeg" alt="Фото 4">
+    <img src="photo4 (3).jpeg" alt="Фото 5">
+    <img src="photo4 (4).jpeg" alt="Фото 6">
+    <img src="photo4 (5).jpeg" alt="Фото 7">
   </div>
 
-  <!-- Слайдер -->
-  <div class="slider" aria-label="Галерея">
-    <div class="slides">
-      <img src="photo1.jpeg" alt="Мы вдвоём — момент счастья">
-      <img src="photo2.jpeg" alt="Солнечный день вместе">
-      <img src="photo3.jpeg" alt="Особенный вечер">
-      <!-- Добавь свои фото сюда -->
-    </div>
+  <button class="love-button" onclick="toggleBlock('reasons')">Почему я тебя люблю</button>
+  <button class="extra-button" onclick="toggleBlock('story')">Как мы познакомились</button>
+  <button class="extra-button" onclick="toggleBlock('gratitude')">За что я благодарен</button>
+
+  <div id="reasons">
+    <ul>
+      <li>Ты вдохновляешь меня быть лучше</li>
+      <li>С тобой каждый момент — как первый</li>
+      <li>Твой голос — мой дом</li>
+      <li>Ты наполняешь мою жизнь смыслом</li>
+      <li>Никто не смеется так, как ты</li>
+      <li>Ты — самый красивый случай в моей жизни</li>
+      <li>Даже твои недостатки я люблю больше, чем чьи-либо достоинства</li>
+      <li>Ты умеешь делать чудо из обыденного</li>
+      <li>С тобой я чувствую, что люблю по-настоящему</li>
+      <li>Ты просто ты — и этого достаточно 💘</li>
+    </ul>
   </div>
 
-  <!-- Аудио -->
-  <div class="audio-wrap">
-    <audio id="player" autoplay controls>
-      <source src="die_with_a_smile.mp3" type="audio/mp3">
-      Твой браузер не поддерживает аудио.
-    </audio>
+  <div id="story">
+    <p>Всё началось на работе...  
+    Среди отчетов, дедлайнов и кофе — появилась ты.  
+    С того дня всё изменилось. Ты стала смыслом каждого утра и улыбкой любого вечера.</p>
   </div>
 
-  <!-- Кнопка «ПОЧЕМУ Я ТЕБЯ ЛЮБЛЮ» -->
-  <div class="center">
-    <button id="whyBtn" class="btn-primary">Почему я тебя люблю</button>
+  <div id="gratitude">
+    <p>Ты была рядом, когда всё рушилось.  
+    В те моменты, когда казалось, что сил нет — ты просто была.  
+    Твоё присутствие — моя опора, и я благодарен тебе за каждый день.</p>
   </div>
 
-  <!-- Модальное окно с причинами -->
-  <div id="reasonModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="reasonTitle">
-    <div class="modal-content">
-      <button class="close" id="closeModal" aria-label="Закрыть">×</button>
-      <h2 id="reasonTitle">Почему я тебя люблю</h2>
-      <p id="reasonText">Потому что с тобой мир становится теплее.</p>
-      <div class="modal-actions">
-        <button id="prevReason" class="btn-secondary">Назад</button>
-        <button id="nextReason" class="btn-primary">Ещё</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Всплывашка из первой версии -->
-  <div class="message" id="popup">Ты моё чудо 💖</div>
+  <a href="letter.html" class="next-button">Письмо от сердца 💌</a>
 
   <script>
-    // Слайдер
-    let index = 0;
-    setInterval(() => {
-      const slides = document.querySelector('.slides');
-      if(!slides) return;
-      index = (index + 1) % slides.children.length;
-      slides.style.transform = `translateX(-${index * 100}%)`;
-    }, 4000);
-
-    // Всплывающее сообщение через 3 сек
-    setTimeout(() => {
-      const msg = document.getElementById('popup');
-      if(msg) msg.style.display = 'block';
-    }, 3000);
-
-    // ===== ШАГ 1: Диалог любви =====
-    const reasons = [
-      'Потому что с тобой мир становится теплее.',
-      'Ты умеешь смеяться глазами, и это делает мой день.',
-      'Ты веришь в меня даже тогда, когда я сомневаюсь.',
-      'С тобой любое место — это дом.',
-      'Твои объятия лечат лучше любых слов.',
-      'Ты делаешь простые моменты — самыми важными.',
-      'Твоя доброта — это сила.',
-      'Ты вдохновляешь меня быть лучшей версией себя.',
-      'Ты умеешь слушать сердцем.',
-      'С тобой тишина звучит как музыка.',
-      'Ты — моё маленькое чудо каждый день.',
-      'Я люблю тебя просто потому, что ты — ты.'
-    ];
-    let current = Number(localStorage.getItem('reasonIndex') || 0);
-
-    const modal = document.getElementById('reasonModal');
-    const reasonText = document.getElementById('reasonText');
-    const whyBtn = document.getElementById('whyBtn');
-    const nextBtn = document.getElementById('nextReason');
-    const prevBtn = document.getElementById('prevReason');
-    const closeBtn = document.getElementById('closeModal');
-
-    function updateReason() {
-      reasonText.textContent = reasons[(current % reasons.length + reasons.length) % reasons.length];
-      localStorage.setItem('reasonIndex', current);
-    }
-    function openModal() {
-      modal.classList.remove('hidden');
-      updateReason();
-    }
-    function closeModal() {
-      modal.classList.add('hidden');
+    function toggleBlock(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === "none" ? "block" : "none";
     }
 
-    // Сердечки при клике
-    function shootHeartsAround(el, count = 10){
-      const rect = el.getBoundingClientRect();
-      const cx = rect.left + rect.width/2;
-      const cy = rect.top + rect.height/2;
-      for(let i=0;i<count;i++){
-        const span = document.createElement('span');
-        span.className = 'pop-heart';
-        span.textContent = ['💗','💖','💞'][i % 3];
-        const dx = (Math.random() - 0.5) * 120;
-        const dy = (Math.random() - 0.5) * 20;
-        span.style.left = (cx + dx) + 'px';
-        span.style.top  = (cy + dy) + 'px';
-        span.style.animationDelay = (Math.random()*120) + 'ms';
-        span.style.fontSize = (16 + Math.random()*10) + 'px';
-        document.body.appendChild(span);
-        setTimeout(()=> span.remove(), 1200);
-      }
+    // Создание лепестков
+    for (let i = 0; i < 15; i++) {
+      const petal = document.createElement('div');
+      petal.className = 'petal';
+      petal.style.left = `${Math.random() * window.innerWidth}px`;
+      petal.style.animationDelay = `${Math.random() * 5}s`;
+      petal.style.transform = `rotate(${Math.random() * 360}deg)`;
+      document.body.appendChild(petal);
     }
-
-    whyBtn.addEventListener('click', () => {
-      openModal();
-      shootHeartsAround(whyBtn, 12);
-    });
-    nextBtn.addEventListener('click', () => {
-      current++;
-      updateReason();
-      shootHeartsAround(nextBtn, 6);
-    });
-    prevBtn.addEventListener('click', () => {
-      current--;
-      updateReason();
-    });
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
-      if(e.target === modal) closeModal();
-    });
-    document.addEventListener('keydown', (e) => {
-      if(e.key === 'Escape') closeModal();
-      if(e.key === 'ArrowRight' && !modal.classList.contains('hidden')) { current++; updateReason(); }
-      if(e.key === 'ArrowLeft' && !modal.classList.contains('hidden')) { current--; updateReason(); }
-    });
-
-    // Подсказка: из-за браузерной политики автоплей может начать играть без звука, пока нет клика.
-    // После первого взаимодействия со страницей звук включится.
   </script>
 </body>
 </html>
