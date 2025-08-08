@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Письмо от сердца 💖</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #ffe0e6, #fff5f0);
+      font-family: 'Segoe UI', sans-serif;
+      color: #333;
+      text-align: center;
+      padding: 40px;
+    }
+    h1 {
+      font-size: 2.5em;
+      color: #d6336c;
+    }
+    p {
+      font-size: 1.2em;
+      margin: 20px 0;
+    }
+    .timer {
+      font-size: 1.5em;
+      margin-top: 30px;
+      color: #6c757d;
+    }
+    .heart {
+      font-size: 3em;
+      animation: pulse 1.5s infinite;
+      color: #ff3366;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <h1>💌 Моё письмо тебе</h1>
+  <p>Ты — самое дорогое, что есть в моей жизни. Я хочу, чтобы ты знала: каждое мгновение рядом с тобой — это счастье.</p>
+  <p>До особенного дня осталось:</p>
+  <div class="timer" id="countdown"></div>
+  <div class="heart">❤️</div>
+
+  <script>
+    const targetDate = new Date("2024-12-28T00:00:00");
+    const countdown = document.getElementById("countdown");
+
+    function updateTimer() {
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        countdown.textContent = "Настал наш день! ✨";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      countdown.textContent = `${days} дн. ${hours} ч. ${minutes} мин. ${seconds} сек.`;
+    }
+
+    setInterval(updateTimer, 1000);
+    updateTimer();
+  </script>
+</body>
+</html>
