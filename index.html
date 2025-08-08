@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ты — мой космос Зарина 💖</title>
+  <title>Ты — мой космос 💖</title>
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: radial-gradient(ellipse at center, #1b1b3a 0%, #000000 100%);
+      background: radial-gradient(circle at center, #1b1b3a 0%, #000 100%);
       color: #ffccf9;
       overflow: hidden;
     }
@@ -34,9 +34,30 @@
       animation: fadeIn 3s ease-in-out;
     }
 
+    .special-block {
+      text-align: center;
+      padding: 40px;
+      background-color: #0b0c2a;
+      color: #ffffff;
+    }
+
+    .special-block h2 {
+      font-family: 'Georgia', serif;
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .special-block img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+      margin-top: 20px;
+    }
+
     .buttons {
       text-align: center;
-      margin-top: 30px;
+      margin: 30px 0;
     }
 
     .buttons a {
@@ -48,17 +69,12 @@
       border-radius: 25px;
       font-size: 1em;
       display: inline-block;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, background-color 0.3s ease;
     }
 
     .buttons a:hover {
       transform: scale(1.1);
       background-color: #ff85c1;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     .heart {
@@ -67,13 +83,18 @@
       height: 20px;
       background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Iconic_heart.svg/1024px-Iconic_heart.svg.png') no-repeat center;
       background-size: contain;
-      animation: fall 4s linear infinite;
+      animation: fall 4s linear;
       pointer-events: none;
     }
 
     @keyframes fall {
       0% { transform: translateY(-50px) scale(1); opacity: 1; }
       100% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     audio {
@@ -85,24 +106,22 @@
   <h1>Ты — мой космос 💖</h1>
 
   <div class="phrase-box" onclick="dropHeart(event)">Ты — моё вдохновение</div>
-<div style="text-align: center; padding: 40px; background-color: #0b0c2a; color: #ffffff;">
-  <h2 style="font-family: 'Georgia', serif; font-size: 24px; margin-bottom: 20px;">
-    27 декабря 2024 — день, когда мир замер в ожидании перемен. А я — в ожидании тебя.
-  </h2>
-  <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80"
-       alt="Звёздное небо"
-       style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); margin-top: 20px;">
-</div>
-<div class="buttons">
+
+  <div class="special-block">
+    <h2>27 декабря 2024 — день, когда мир замер в ожидании перемен. А я — в ожидании тебя.</h2>
+    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80"
+         alt="Звёздное небо">
+  </div>
+
+  <div class="buttons">
     <a href="gallery.html">Галерея 📸</a>
     <a href="letter.html">Письмо 💌</a>
   </div>
 
   <audio autoplay loop>
-  <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
-  Ваш браузер не поддерживает аудио.
-</audio>
-
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+    Ваш браузер не поддерживает аудио.
+  </audio>
 
   <script>
     const phrases = [
@@ -135,7 +154,7 @@
       setTimeout(() => heart.remove(), 4000);
     }
 
-    // Падающие сердечки
+    // Падающие сердечки по экрану
     setInterval(() => {
       const heart = document.createElement('div');
       heart.className = 'heart';
