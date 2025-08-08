@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ты — мой космос Зарина💖</title>
+  <title>Ты — мой космос Зарина,жаным💖</title>
   <style>
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 100%);
-      color: #fff;
-      overflow: hidden;
+      background: radial-gradient(ellipse at center, #1b1b3a 0%, #000000 100%);
+      color: #e0b3ff;
+      overflow-x: hidden;
     }
 
     canvas {
@@ -32,7 +32,7 @@
       max-width: 700px;
       margin: 30px auto;
       padding: 20px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.05);
       border-radius: 15px;
       font-size: 1.2em;
       line-height: 1.6;
@@ -47,6 +47,13 @@
       margin-top: 20px;
       color: #ffd6e0;
       animation: fadeIn 3s ease-in-out;
+    }
+
+    .countdown {
+      text-align: center;
+      font-size: 1.5em;
+      margin-top: 20px;
+      color: #ffccf9;
     }
 
     .buttons {
@@ -71,6 +78,25 @@
       background-color: #ff85c1;
     }
 
+    .sky-section {
+      text-align: center;
+      margin: 60px auto;
+      color: #e0b3ff;
+      font-size: 1.2em;
+    }
+
+    .sky-image {
+      margin: 20px auto;
+      width: 90%;
+      max-width: 800px;
+      height: 400px;
+      background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+    }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -80,6 +106,7 @@
       h1 { font-size: 2em; }
       .message { font-size: 1em; padding: 15px; }
       .buttons button { font-size: 0.9em; padding: 10px 16px; }
+      .sky-image { height: 250px; }
     }
   </style>
 </head>
@@ -96,13 +123,44 @@
 
   <div class="date">27 декабря 2024 — день, когда моё сердце снова скажет тебе «Я люблю» 💫</div>
 
+  <div class="countdown" id="countdown"></div>
+
   <div class="buttons">
     <button onclick="location.href='gallery.html'">Галерея 📸</button>
     <button onclick="location.href='letter.html'">Письмо 💌</button>
     <button onclick="location.href='timer.html'">Обратный отсчёт ⏳</button>
   </div>
 
+  <div class="sky-section">
+    <h2>Вот как выглядело небо в ту дату — 27 декабря 2024</h2>
+    <p>Красота космоса, как отражение нашей любви.</p>
+    <div class="sky-image"></div>
+  </div>
+
   <script>
+    // Таймер
+    const countdown = document.getElementById("countdown");
+    const targetDate = new Date("2024-12-28T00:00:00");
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        countdown.textContent = "Настал день!";
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      countdown.textContent = `${days}д ${hours}ч ${minutes}м ${seconds}с`;
+    }
+
+    setInterval(updateCountdown, 1000);
+
     // Звёзды
     const canvas = document.getElementById('stars');
     const ctx = canvas.getContext('2d');
@@ -154,4 +212,3 @@
   </script>
 </body>
 </html>
-
