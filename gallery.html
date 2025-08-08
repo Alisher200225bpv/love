@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Галерея для Зарина 📸</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #fff0f5, #ffe6f0);
+      overflow-x: hidden;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5em;
+      color: #d63384;
+      margin: 30px 0;
+      animation: fadeIn 2s ease-in-out;
+    }
+
+    .gallery {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      padding: 20px;
+    }
+
+    .photo-block {
+      position: relative;
+      width: 80%;
+      max-width: 600px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      animation: slideUp 1.5s ease forwards;
+      opacity: 0;
+    }
+
+    .photo-block img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .caption {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      text-align: center;
+      padding: 10px;
+      font-size: 1.2em;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <h1>Моменты с Зариной 💖</h1>
+
+  <div class="gallery">
+    <div class="photo-block">
+      <img src="photo1.jpg" alt="Зарина улыбается">
+      <div class="caption">Ты — моё вдохновение 🌸</div>
+    </div>
+    <div class="photo-block">
+      <img src="photo2.jpg" alt="Зарина на прогулке">
+      <div class="caption">С тобой каждый день — как праздник ✨</div>
+    </div>
+    <div class="photo-block">
+      <img src="photo3.jpg" alt="Зарина смеётся">
+      <div class="caption">Твой смех — моё любимое звучание 🎵</div>
+    </div>
+    <div class="photo-block">
+      <img src="photo4.jpg" alt="Зарина смотрит в камеру">
+      <div class="caption">В твоих глазах — мой дом 💫</div>
+    </div>
+  </div>
+
+  <script>
+    // Анимация появления при прокрутке
+    const blocks = document.querySelectorAll('.photo-block');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+        }
+      });
+    }, { threshold: 0.3 });
+
+    blocks.forEach(block => {
+      block.style.animationPlayState = 'paused';
+      observer.observe(block);
+    });
+  </script>
+</body>
+</html>
