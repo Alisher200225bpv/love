@@ -1,168 +1,146 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ты — мой космос 💖</title>
-  <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Для тебя ❤️</title>
+<style>
     body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: radial-gradient(circle at center, #1b1b3a 0%, #000 100%);
-      color: #ffccf9;
-      overflow: hidden;
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') no-repeat center center/cover;
+        height: 100vh;
+        overflow: hidden;
+        color: white;
+        text-align: center;
     }
-
     h1 {
-      text-align: center;
-      font-size: 2.5em;
-      margin-top: 40px;
-      color: #ff99c8;
-      animation: fadeIn 2s ease-in-out;
+        font-size: 3em;
+        margin-top: 20vh;
+        animation: glow 2s infinite alternate;
     }
-
-    .phrase-box {
-      text-align: center;
-      font-size: 1.5em;
-      margin: 30px auto;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 15px;
-      max-width: 700px;
-      cursor: pointer;
-      backdrop-filter: blur(5px);
-      animation: fadeIn 3s ease-in-out;
+    @keyframes glow {
+        from { text-shadow: 0 0 10px pink, 0 0 20px red; }
+        to { text-shadow: 0 0 20px pink, 0 0 40px red; }
     }
-
-    .special-block {
-      text-align: center;
-      padding: 40px;
-      background-color: #0b0c2a;
-      color: #ffffff;
+    .typewriter {
+        display: inline-block;
+        border-right: 3px solid rgba(255,255,255,0.75);
+        white-space: nowrap;
+        overflow: hidden;
+        animation: typing 4s steps(30, end), blink 0.75s step-end infinite;
     }
-
-    .special-block h2 {
-      font-family: 'Georgia', serif;
-      font-size: 24px;
-      margin-bottom: 20px;
+    @keyframes typing {
+        from { width: 0 }
+        to { width: 100% }
     }
-
-    .special-block img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-      margin-top: 20px;
+    @keyframes blink {
+        from, to { border-color: transparent }
+        50% { border-color: white; }
     }
-
-    .buttons {
-      text-align: center;
-      margin: 30px 0;
+    .btn {
+        display: inline-block;
+        margin: 20px;
+        padding: 12px 25px;
+        background: rgba(255, 0, 80, 0.7);
+        border-radius: 30px;
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        transition: 0.4s;
+        box-shadow: 0 0 10px rgba(255,0,80,0.6);
     }
-
-    .buttons a {
-      background-color: #ff69b4;
-      color: white;
-      text-decoration: none;
-      padding: 12px 20px;
-      margin: 10px;
-      border-radius: 25px;
-      font-size: 1em;
-      display: inline-block;
-      transition: transform 0.3s ease, background-color 0.3s ease;
+    .btn:hover {
+        background: rgba(255,0,80,1);
+        box-shadow: 0 0 25px rgba(255,0,80,1), 0 0 50px rgba(255,0,80,0.8);
+        transform: scale(1.1);
     }
-
-    .buttons a:hover {
-      transform: scale(1.1);
-      background-color: #ff85c1;
+    canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: -1;
     }
-
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Iconic_heart.svg/1024px-Iconic_heart.svg.png') no-repeat center;
-      background-size: contain;
-      animation: fall 4s linear;
-      pointer-events: none;
-    }
-
-    @keyframes fall {
-      0% { transform: translateY(-50px) scale(1); opacity: 1; }
-      100% { transform: translateY(100vh) scale(0.5); opacity: 0; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    audio {
-      display: none;
-    }
-  </style>
+</style>
 </head>
 <body>
-  <h1>Ты — мой космос 💖</h1>
 
-  <div class="phrase-box" onclick="dropHeart(event)">Ты — моё вдохновение</div>
+<h1>💖 Для самой лучшей 💖</h1>
+<div class="typewriter">Ты — моё счастье, моя Вселенная...</div>
+<br>
+<a href="letter.html" class="btn">Письмо</a>
+<a href="gallery.html" class="btn">Галерея</a>
 
-  <div class="special-block">
-    <h2>Спасибо что рядом</h2>
-    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1600&q=80"
-         alt="Звёздное небо">
-  </div>
+<audio id="bg-music" autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/18/audio_6f4cf69d27.mp3?filename=romantic-piano-117450.mp3" type="audio/mpeg">
+</audio>
 
-  <div class="buttons">
-    <a href="gallery.html">Галерея 📸</a>
-    <a href="letter.html">Письмо 💌</a>
-  </div>
+<canvas id="hearts"></canvas>
 
-  <audio autoplay loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
-    Ваш браузер не поддерживает аудио.
-  </audio>
-
-  <script>
-    const phrases = [
-      "Ты — моё вдохновение",
-      "Ты — моя вселенная",
-      "Ты — моё счастье",
-      "Ты — моя нежность",
-      "Ты — мой свет",
-      "Ты — моя любовь",
-      "Ты — моё всё",
-      "Ты — мой космос",
-      "Ты — моя звезда",
-      "Ты — моё сердце"
-    ];
-
-    const phraseBox = document.querySelector('.phrase-box');
-    let index = 0;
-
-    setInterval(() => {
-      index = (index + 1) % phrases.length;
-      phraseBox.textContent = phrases[index];
-    }, 2000);
-
-    function dropHeart(e) {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.style.left = `${e.clientX}px`;
-      heart.style.top = `${e.clientY}px`;
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 4000);
+<script>
+// Плавное появление музыки
+const music = document.getElementById("bg-music");
+music.volume = 0;
+let vol = 0;
+const fade = setInterval(() => {
+    if (vol < 1) {
+        vol += 0.01;
+        music.volume = vol;
+    } else {
+        clearInterval(fade);
     }
+}, 100);
 
-    // Падающие сердечки по экрану
-    setInterval(() => {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.style.left = `${Math.random() * window.innerWidth}px`;
-      heart.style.top = `-30px`;
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 4000);
-    }, 300);
-  </script>
+// Анимация сердечек
+const canvas = document.getElementById('hearts');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let hearts = [];
+function Heart() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 20 + 10;
+    this.speedY = Math.random() * 1 + 0.5;
+    this.color = 'rgba(255,105,180,0.8)';
+}
+Heart.prototype.update = function() {
+    this.y -= this.speedY;
+    if (this.y < -this.size) {
+        this.y = canvas.height + this.size;
+        this.x = Math.random() * canvas.width;
+    }
+};
+Heart.prototype.draw = function() {
+    ctx.beginPath();
+    ctx.moveTo(this.x, this.y);
+    ctx.bezierCurveTo(this.x - this.size / 2, this.y - this.size / 2,
+                      this.x - this.size, this.y + this.size / 3,
+                      this.x, this.y + this.size);
+    ctx.bezierCurveTo(this.x + this.size, this.y + this.size / 3,
+                      this.x + this.size / 2, this.y - this.size / 2,
+                      this.x, this.y);
+    ctx.fillStyle = this.color;
+    ctx.fill();
+};
+
+function init() {
+    for (let i = 0; i < 50; i++) {
+        hearts.push(new Heart());
+    }
+}
+function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    hearts.forEach(h => {
+        h.update();
+        h.draw();
+    });
+    requestAnimationFrame(animate);
+}
+init();
+animate();
+</script>
+
 </body>
 </html>
