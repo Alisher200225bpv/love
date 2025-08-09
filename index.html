@@ -3,143 +3,161 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Для тебя ❤️</title>
+<title>Для неё — Гром и гроза</title>
 <style>
-    body {
-        margin: 0;
-        font-family: 'Segoe UI', sans-serif;
-        background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb') no-repeat center center/cover;
-        height: 100vh;
-        overflow: hidden;
-        color: white;
-        text-align: center;
-    }
-    h1 {
-        font-size: 3em;
-        margin-top: 20vh;
-        animation: glow 2s infinite alternate;
-    }
-    @keyframes glow {
-        from { text-shadow: 0 0 10px pink, 0 0 20px red; }
-        to { text-shadow: 0 0 20px pink, 0 0 40px red; }
-    }
-    .typewriter {
-        display: inline-block;
-        border-right: 3px solid rgba(255,255,255,0.75);
-        white-space: nowrap;
-        overflow: hidden;
-        animation: typing 4s steps(30, end), blink 0.75s step-end infinite;
-    }
-    @keyframes typing {
-        from { width: 0 }
-        to { width: 100% }
-    }
-    @keyframes blink {
-        from, to { border-color: transparent }
-        50% { border-color: white; }
-    }
-    .btn {
-        display: inline-block;
-        margin: 20px;
-        padding: 12px 25px;
-        background: rgba(255, 0, 80, 0.7);
-        border-radius: 30px;
-        text-decoration: none;
-        color: white;
-        font-weight: bold;
-        transition: 0.4s;
-        box-shadow: 0 0 10px rgba(255,0,80,0.6);
-    }
-    .btn:hover {
-        background: rgba(255,0,80,1);
-        box-shadow: 0 0 25px rgba(255,0,80,1), 0 0 50px rgba(255,0,80,0.8);
-        transform: scale(1.1);
-    }
-    canvas {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: -1;
-    }
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg,#ffe6f0 0%,#fff6fb 100%);
+    overflow-x: hidden;
+    color: #333;
+  }
+  /* Заставка */
+  #welcome {
+    position: fixed; top:0; left:0; width:100%; height:100%;
+    background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column; z-index:10; text-align:center;
+  }
+  #welcome h1 {
+    font-size: 2.5em; color:white; animation: pulse 2s infinite;
+  }
+  @keyframes pulse {0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+  #welcome button {
+    background: white; border: none; padding:15px 30px;
+    font-size:1.2em; border-radius:30px; cursor:pointer; margin-top:20px;
+    transition:0.3s;
+  }
+  #welcome button:hover {background:#ffe4e1;}
+
+  /* Контент */
+  header {padding: 20px; text-align: center;}
+  header h2 {margin:0;}
+  .timer {font-size:1.2em; margin-top:8px; color:#555;}
+
+  .gallery {
+    display:grid;
+    grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+    gap:15px;
+    padding:20px;
+  }
+  .gallery-item {
+    position:relative; overflow:hidden; border-radius:12px;
+  }
+  .gallery-item img {
+    width:100%; transition: transform 0.3s ease;
+  }
+  .gallery-item:hover img {
+    transform: scale(1.1);
+  }
+  .caption {
+    position:absolute; bottom:0; width:100%;
+    background:rgba(0,0,0,0.5); color:white;
+    padding:8px; font-size:0.95em; text-align:center;
+  }
+
+  .letter {
+    background: white; margin:20px; padding:20px;
+    border-radius:12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    line-height:1.5;
+  }
+
+  .modal {
+    display:none; position:fixed; top:0; left:0;
+    width:100%; height:100%;
+    background:rgba(0,0,0,0.6);
+    align-items:center; justify-content:center;
+    z-index:20;
+  }
+  .modal-content {
+    background:white; padding:20px; border-radius:12px;
+    width:90%; max-width:400px; text-align:left;
+  }
+  .modal-content h2 {margin-top:0;}
+  .close {
+    position:absolute; top:10px; right:10px;
+    font-size:1.4em; cursor:pointer;
+  }
 </style>
 </head>
 <body>
 
-<h1>💖 Для самой лучшей 💖</h1>
-<div class="typewriter">Ты — моё счастье, моя Вселенная...</div>
-<br>
-<a href="letter.html" class="btn">Письмо</a>
-<a href="gallery.html" class="btn">Галерея</a>
+<!-- Заставка -->
+<div id="welcome">
+  <h1>Для самой особенной</h1>
+  <button onclick="startSite()">Начать</button>
+</div>
 
-<audio id="bg-music" autoplay loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/10/18/audio_6f4cf69d27.mp3?filename=romantic-piano-117450.mp3" type="audio/mpeg">
-</audio>
+<!-- Контент -->
+<header>
+  <h2>Наше время вместе</h2>
+  <div class="timer" id="timer">Считаем...</div>
+</header>
 
-<canvas id="hearts"></canvas>
+<!-- Галерея -->
+<div class="gallery">
+  <div class="gallery-item"><img src="photo1.jpg"><div class="caption">Твоя улыбка</div></div>
+  <div class="gallery-item"><img src="photo2.jpg"><div class="caption">Наши прогулки</div></div>
+  <div class="gallery-item"><img src="photo3.jpg"><div class="caption">Ты и солнечный свет</div></div>
+  <div class="gallery-item"><img src="photo4.jpg"><div class="caption">Сердце моё</div></div>
+  <div class="gallery-item"><img src="photo5.jpg"><div class="caption">Тёплые вечера</div></div>
+  <div class="gallery-item"><img src="photo6.jpg"><div class="caption">Взгляд твой</div></div>
+  <div class="gallery-item"><img src="photo7.jpg"><div class="caption">Руки твои</div></div>
+  <div class="gallery-item"><img src="photo8.jpg"><div class="caption">Навсегда</div></div>
+</div>
+
+<!-- Письмо -->
+<div class="letter">
+  <p>Моя дорогая,</p>
+  <p>Каждый день с тобой — самый драгоценный. Ты — свет моего пути, и я благодарен судьбе за тебя.</p>
+  <button onclick="openModal()">10 причин, почему я тебя люблю</button>
+</div>
+
+<!-- Модалка -->
+<div id="modal" class="modal" onclick="closeModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2>10 причин, почему я тебя люблю</h2>
+    <ol>
+      <li>Ты — мой уют.</li>
+      <li>С твоим смехом просыпаюсь счастливым.</li>
+      <li>Ты вдохновляешь меня.</li>
+      <li>С тобой уютно тишиной.</li>
+      <li>Ты принимаешь меня.</li>
+      <li>Твои глаза — мой дом.</li>
+      <li>Ты умеешь слушать.</li>
+      <li>Ты — моя муза.</li>
+      <li>Ты — моя опора.</li>
+      <li>Ты — всё, что мне нужно.</li>
+    </ol>
+  </div>
+</div>
+
+<!-- YouTube-плеер песни -->
+<iframe id="ytplayer" type="text/html" width="0" height="0"
+  src="https://www.youtube.com/embed/_5IK3B1TgDE?autoplay=1&loop=1&playlist=_5IK3B1TgDE"
+  frameborder="0"></iframe>
 
 <script>
-// Плавное появление музыки
-const music = document.getElementById("bg-music");
-music.volume = 0;
-let vol = 0;
-const fade = setInterval(() => {
-    if (vol < 1) {
-        vol += 0.01;
-        music.volume = vol;
-    } else {
-        clearInterval(fade);
-    }
-}, 100);
-
-// Анимация сердечек
-const canvas = document.getElementById('hearts');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let hearts = [];
-function Heart() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.size = Math.random() * 20 + 10;
-    this.speedY = Math.random() * 1 + 0.5;
-    this.color = 'rgba(255,105,180,0.8)';
+// Запуск музыки и скрытие заставки
+function startSite() {
+  document.getElementById('welcome').style.display = 'none';
+  calculateDays(); // сразу показать таймер
 }
-Heart.prototype.update = function() {
-    this.y -= this.speedY;
-    if (this.y < -this.size) {
-        this.y = canvas.height + this.size;
-        this.x = Math.random() * canvas.width;
-    }
-};
-Heart.prototype.draw = function() {
-    ctx.beginPath();
-    ctx.moveTo(this.x, this.y);
-    ctx.bezierCurveTo(this.x - this.size / 2, this.y - this.size / 2,
-                      this.x - this.size, this.y + this.size / 3,
-                      this.x, this.y + this.size);
-    ctx.bezierCurveTo(this.x + this.size, this.y + this.size / 3,
-                      this.x + this.size / 2, this.y - this.size / 2,
-                      this.x, this.y);
-    ctx.fillStyle = this.color;
-    ctx.fill();
-};
 
-function init() {
-    for (let i = 0; i < 50; i++) {
-        hearts.push(new Heart());
-    }
+// Таймер — дни с 27 Dec 2024
+function calculateDays(){
+  const start = new Date("2024-12-27T00:00:00");
+  const now = new Date();
+  const diff = now - start;
+  const days = Math.floor(diff / (1000*60*60*24));
+  document.getElementById('timer').textContent = `Мы вместе уже ${days} дней`;
 }
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    hearts.forEach(h => {
-        h.update();
-        h.draw();
-    });
-    requestAnimationFrame(animate);
-}
-init();
-animate();
+setInterval(calculateDays, 60000);
+
+// Модалка
+function openModal(){ document.getElementById('modal').style.display = 'flex'; }
+function closeModal(){ document.getElementById('modal').style.display = 'none'; }
 </script>
 
 </body>
