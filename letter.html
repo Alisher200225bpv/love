@@ -1,147 +1,69 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>Письмо от сердца 💌</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 30px;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, #fff0f5, #ffe4e1);
-      color: #333;
-      overflow-x: hidden;
-    }
-    h1 {
-      text-align: center;
-      font-size: 2.5em;
-      color: #d6336c;
-      animation: pulse 2s infinite;
-    }
-    .letter {
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 30px;
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-      animation: unfold 1.5s ease-out;
-    }
-    @keyframes unfold {
-      0% { transform: scaleY(0); opacity: 0; }
-      100% { transform: scaleY(1); opacity: 1; }
-    }
-    .typewriter {
-      overflow: hidden;
-      border-right: .15em solid #d6336c;
-      white-space: nowrap;
-      animation: typing 4s steps(40, end), blink-caret .75s step-end infinite;
-    }
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
-    }
-    @keyframes blink-caret {
-      from, to { border-color: transparent }
-      50% { border-color: #d6336c }
-    }
-    .countdown {
-      text-align: center;
-      font-size: 1.2em;
-      margin-top: 20px;
-      color: #6c757d;
-    }
-    .reasons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 30px;
-    }
-    .reasons button {
-      padding: 10px 15px;
-      border: none;
-      border-radius: 20px;
-      background-color: #ff99c8;
-      color: white;
-      cursor: pointer;
-      transition: box-shadow 0.3s;
-    }
-    .reasons button:hover {
-      box-shadow: 0 0 10px #ff66a3;
-    }
-    audio {
-      display: block;
-      margin: 30px auto;
-      width: 100%;
-      max-width: 500px;
-    }
-    @media (max-width: 600px) {
-      .letter {
-        padding: 20px;
-        margin: 20px;
-      }
-      h1 {
-        font-size: 2em;
-      }
-    }
-    .petal {
-      position: fixed;
-      top: -50px;
-      width: 20px;
-      height: 20px;
-      background: url('petal.png') no-repeat center;
-      background-size: contain;
-      animation: fall linear infinite;
-      pointer-events: none;
-    }
-    @keyframes fall {
-      to {
-        transform: translateY(100vh) rotate(360deg);
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Письмо тебе</title>
+<style>
+body {
+    margin: 0;
+    font-family: 'Dancing Script', cursive;
+    color: white;
+    background: linear-gradient(270deg, #ff758c, #ff7eb3, #ff758c);
+    background-size: 600% 600%;
+    animation: gradientBG 10s ease infinite;
+    text-align: center;
+}
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+h1 {
+    font-size: 3rem;
+    margin-top: 30px;
+}
+.letter {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.5);
+    font-size: 1.5rem;
+}
+nav {
+    margin-top: 20px;
+}
+nav a {
+    text-decoration: none;
+    color: white;
+    padding: 10px 20px;
+    border: 2px solid white;
+    border-radius: 10px;
+    margin: 5px;
+    transition: 0.3s;
+}
+nav a:hover {
+    background-color: white;
+    color: #ff758c;
+}
+</style>
 </head>
 <body>
-  <h1>Письмо от сердца 💌</h1>
-
-  <div class="letter">
-    <p class="typewriter">Ты — моё вдохновение, моя радость, моя вселенная. Спасибо за твою доброту, поддержку и любовь. Я счастлив, что ты рядом 💖</p>
-  </div>
-
-  <div class="countdown" id="countdown"></div>
-
-  <div class="reasons">
-    <button onclick="alert('Ты умеешь слушать и понимать 💬')">Причина 1</button>
-    <button onclick="alert('Ты даришь тепло даже в самые холодные дни ❄️')">Причина 2</button>
-    <button onclick="alert('Ты делаешь меня лучше каждый день 🌱')">Причина 3</button>
-    <button onclick="alert('Ты — моё чудо ✨')">Причина 4</button>
-  </div>
-
-  <audio controls>
-    <source src="song.mp3" type="audio/mpeg">
-    Твой браузер не поддерживает аудио.
-  </audio>
-
-  <script>
-    function updateCountdown() {
-      const target = new Date("2024-12-28T00:00:00");
-      const now = new Date();
-      const diff = target - now;
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      document.getElementById("countdown").textContent =
-        "До 28 декабря 2024 осталось: " + days + " дней 💫";
-    }
-    updateCountdown();
-
-    // Падающие лепестки
-    for (let i = 0; i < 30; i++) {
-      const petal = document.createElement('div');
-      petal.className = 'petal';
-      petal.style.left = Math.random() * 100 + 'vw';
-      petal.style.animationDuration = (5 + Math.random() * 5) + 's';
-      document.body.appendChild(petal);
-    }
-  </script>
+<h1>💌 Моё письмо тебе</h1>
+<div class="letter">
+    Дорогая, с того момента, как мы встретились, мир стал ярче.  
+    Ты — моё вдохновение, моя радость, моё сердце.  
+    Каждый день с тобой — это подарок судьбы.  
+    Я обещаю любить тебя всегда. ❤️
+</div>
+<nav>
+    <a href="index.html">🏠 Главная</a>
+    <a href="gallery.html">📸 Галерея</a>
+</nav>
+<audio autoplay loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+</audio>
 </body>
 </html>
